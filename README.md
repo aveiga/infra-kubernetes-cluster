@@ -1,6 +1,6 @@
-# rpizero-k3s-cluster
+# Airgap Infra-dedicated Kubernetes Edge Cluster
 
-Ansible playbooks to setup a Raspberry Pi Zero 2 W Kubernetes cluster using [k3s](https://k3s.io)
+Ansible playbooks to setup an Airgap, HA [k3s](https://k3s.io) cluster Infrastructure components
 
 ## Ansible host pre-requisites
 
@@ -9,11 +9,10 @@ Ansible playbooks to setup a Raspberry Pi Zero 2 W Kubernetes cluster using [k3s
 1. Install Python
 1. Install the Python Docker library: `pip3 install docker`
 1. Install the Python PyYaml library: `pip3 install pyyaml`
-1. Install the Python docker-compose library: `pip3 install docker-compose`
 
 ## Install Procedure
 
-1. Customize the [hosts.yaml](./hosts.yaml) file to point to your Raspberries. The "vm" host is assumed to be a single control plane node. More can be added to setup an HA control plane.
+1. Customize the [hosts.yaml](./hosts.yaml) file to point to your nodes. The "master0\*" hosts are assumed to be control plane nodes.
 1. `make pre-requisites`
 1. `make install`
 
@@ -23,8 +22,8 @@ Ansible playbooks to setup a Raspberry Pi Zero 2 W Kubernetes cluster using [k3s
 
 ## Full documentation
 
-The full project description is available in [my personal blog](https://www.andreveiga.dev)
+TBD
 
 ## Disclaimer
 
-The provided code was tested on a 2020 M1 Macbook Air, where the Kubernetes single control plane node was running on a VM (Ubuntu), and three Raspberry Pi Zero 2 W's acting as Kubernetes worker nodes.
+The provided code was tested on a 2020 M1 Macbook Air as the Ansible host and VirtualBox VMs running on a Windows host acting as the Kubernetes nodes.

@@ -1,5 +1,5 @@
 ---
-- name: Install k3s control plane pre-requisites
-  hosts: vm
+- name: Setup pre-requisites
+  hosts: all
   roles:
     - pre-requisites

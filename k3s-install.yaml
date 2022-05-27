@@ -1,9 +1,4 @@
 ---
-- name: Setup pre-requisites
-  hosts: all
-  roles:
-    - pre-requisites
-
 - name: Install first k3s control plane node
   hosts: master01
   roles:
