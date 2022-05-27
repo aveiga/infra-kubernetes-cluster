@@ -1,0 +1,30 @@
+---
+- name: Create temporary local directory
+  ansible.builtin.file:
+    path: "{{ local_bundle_dir }}"
+    state: directory
+  delegate_to: localhost
+
+- name: Download k3s binary
+  ansible.builtin.get_url:
+    url: "{{ k3s_binary_url }}"
+    dest: "{{ local_bundle_dir }}/k3s"
+    mode: "+x"
+
+- name: Download k3s images
+  ansible.builtin.get_url:
+    url: "{{ k3s_airgap_images_url }}"
+    dest: "{{ local_bundle_dir }}/k3s-airgap-images-amd64.tar.gz"
+    mode: "0644"
+
+- name: Download k3s install script
+  ansible.builtin.get_url:
+    url: "{{ k3s_install_script }}"
+    dest: "{{ local_bundle_dir }}/install.sh"
+    mode: "+x"
+
+- name: Archive the bundle and the Ansible playbooks
+  ansible.builtin.archive:
+    path: "{{ ansible_playbook_dir }}"
+    dest: "{{ ansible_playbook_dir }}/../{{ bundle_name }}.tgz"
+  delegate_to: localhost

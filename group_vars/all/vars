@@ -1,0 +1,12 @@
+# Public variables
+k3s_binary_url: "https://github.com/k3s-io/k3s/releases/download/v1.23.6%2Bk3s1/k3s"
+k3s_airgap_images_url: "https://github.com/k3s-io/k3s/releases/download/v1.23.6%2Bk3s1/k3s-airgap-images-amd64.tar.gz"
+k3s_install_script: "https://get.k3s.io"
+
+# Private variables
+bundle_name: "edge_kubernetes"
+local_bundle_dir: "{{ ansible_playbook_dir }}/bundle/{{ bundle_name }}"
+remote_bundles_dir: "/home/{{ vaulted_ssh_user }}/bundles"
+remote_edge_bundle_dir: "{{ remote_bundles_dir }}/{{ bundle_name }}"
+ansible_become_pass: "{{ vaulted_become_password }}"
+ansible_ssh_user: "{{ vaulted_ssh_user }}"

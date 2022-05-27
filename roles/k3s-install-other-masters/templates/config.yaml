@@ -1,0 +1,2 @@
+node-name: { { inventory_hostname } }
+server: "https://{{ hostvars['master01']['ansible_host'] }}:6443"

@@ -1,0 +1,20 @@
+---
+- name: Setup pre-requisites
+  hosts: all
+  roles:
+    - pre-requisites
+
+- name: Install first k3s control plane node
+  hosts: master01
+  roles:
+    - k3s-install-first-master
+
+- name: Install other k3s control plane nodes
+  hosts: master02 master03
+  roles:
+    - k3s-install-other-masters
+
+- name: Install k3s agent nodes
+  hosts: worker01 worker02 worker03
+  roles:
+    - k3s-install-agents

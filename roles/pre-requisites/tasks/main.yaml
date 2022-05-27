@@ -1,0 +1,12 @@
+---
+- name: Ensure remote bundle directory is created
+  ansible.builtin.file:
+    path: "{{ remote_bundles_dir }}"
+    state: "directory"
+    mode: "0644"
+
+- name: Copy bundle
+  ansible.builtin.copy:
+    src: "{{ local_bundle_dir }}"
+    dest: "{{ remote_edge_bundle_dir }}"
+    mode: "0644"

@@ -1,0 +1,3 @@
+node-name: {{ inventory_hostname }}
+token: "{{ hostvars['master01']['token'].stdout }}"
+server: "https://{{ hostvars['master01']['ansible_host'] }}:6443"
