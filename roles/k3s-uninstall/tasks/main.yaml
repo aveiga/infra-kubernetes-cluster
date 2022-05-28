@@ -2,3 +2,9 @@
 - name: Run k3s uninstall script
   become: true
   command: /usr/local/bin/k3s-uninstall.sh
+
+- name: Remove the bundle
+  become: true
+  ansible.builtin.file:
+    path: "{{ remote_edge_bundle_dir }}"
+    state: absent

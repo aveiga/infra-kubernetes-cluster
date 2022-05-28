@@ -9,19 +9,17 @@
 - name: Install K3s
   become: true
   shell:
-    command: "INSTALL_K3S_SKIP_DOWNLOAD=true ./install.sh"
+    cmd: "INSTALL_K3S_SKIP_DOWNLOAD=true INSTALL_K3S_EXEC='server --server https://{{ hostvars['master01']['ansible_host'] }}:6443' ./install.sh"
     chdir: "{{ remote_edge_bundle_dir }}"
   ignore_errors: true
   async: 600
   poll: 5
-  register: wp
-  failed_when: wp.rc not in [0,1]
 
-- name: Ensure k3s is running
-  become: true
-  ansible.builtin.systemd:
-    state: restarted
-    name: k3s
+# - name: Ensure k3s is running
+#   become: true
+#   ansible.builtin.systemd:
+#     state: restarted
+#     name: k3s
 
 - name: Create .kube directory
   ansible.builtin.file:

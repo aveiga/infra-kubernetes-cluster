@@ -1,3 +1,6 @@
+bundle:
+	ansible-playbook bundle.yaml --ask-vault-pass
+
 pre-requisites:
 	ansible-playbook pre-requisites.yaml --ask-vault-pass
 

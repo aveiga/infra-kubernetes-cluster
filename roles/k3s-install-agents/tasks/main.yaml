@@ -38,9 +38,10 @@
     mode: 0644
 
 - name: Install K3s
-  shell: "INSTALL_K3S_SKIP_DOWNLOAD=true INSTALL_K3S_EXEC='agent' ./install.sh"
+  become: true
+  shell:
+    cmd: "INSTALL_K3S_SKIP_DOWNLOAD=true INSTALL_K3S_EXEC='agent' ./install.sh"
+    chdir: "{{ remote_edge_bundle_dir }}"
   ignore_errors: true
   async: 600
   poll: 5
-  register: wp
-  failed_when: wp.rc not in [0,1]

@@ -1,23 +1,23 @@
 ---
 all:
   hosts:
-    localhost:
-      ansible_connection: local
+    # localhost:
+    #   ansible_connection: local
     master01:
-      ansible_host: 192.168.1.154
+      ansible_host: 192.168.1.155
       ansible_user: aveiga
     master02:
-      ansible_host: 192.168.1.154
+      ansible_host: 192.168.1.156
       ansible_user: aveiga
     master03:
-      ansible_host: 192.168.1.154
+      ansible_host: 192.168.1.157
       ansible_user: aveiga
     worker01:
-      ansible_host: 192.168.1.154
+      ansible_host: 192.168.1.158
       ansible_user: aveiga
     worker02:
-      ansible_host: rpizero01.local
+      ansible_host: 192.168.1.159
       ansible_user: aveiga
     worker03:
-      ansible_host: rpizero02.local
+      ansible_host: 192.168.1.160
       ansible_user: aveiga

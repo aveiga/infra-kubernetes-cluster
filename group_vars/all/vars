@@ -5,7 +5,7 @@ k3s_install_script: "https://get.k3s.io"
 
 # Private variables
 bundle_name: "edge_kubernetes"
-local_bundle_dir: "{{ ansible_playbook_dir }}/bundle/{{ bundle_name }}"
+local_bundle_dir: "{{ playbook_dir }}/bundle/{{ bundle_name }}"
 remote_bundles_dir: "/home/{{ vaulted_ssh_user }}/bundles"
 remote_edge_bundle_dir: "{{ remote_bundles_dir }}/{{ bundle_name }}"
 ansible_become_pass: "{{ vaulted_become_password }}"
