@@ -63,6 +63,9 @@ sudo btrfs filesystem resize max /mnt
   - use storageClass provided by Rook
   - understand how to use the domains
 - ArgoCD
+  - deploy minIO using an Application CRD
+- Rook
+  - understand how to recover previously used partitions
 
 ## Resources
 
