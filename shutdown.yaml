@@ -1,0 +1,8 @@
+---
+- name: Setup pre-requisites
+  hosts: all
+  tasks:
+    - name: Shutdown all nodes
+      become: true
+      community.general.shutdown:
+        delay: 0

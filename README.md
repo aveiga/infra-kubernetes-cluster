@@ -21,6 +21,10 @@ Ansible playbooks to setup an Airgap, HA [k3s](https://k3s.io) cluster Infrastru
 
 1. `make uninstall`
 
+## Shutdown all nodes
+
+1. `make shutdown`
+
 ## Full documentation
 
 TBD

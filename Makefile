@@ -9,3 +9,6 @@ install:
 
 uninstall:
 	ansible-playbook k3s-uninstall.yaml --ask-vault-pass
+
+shutdown:
+	ansible-playbook shutdown.yaml --ask-vault-pass
