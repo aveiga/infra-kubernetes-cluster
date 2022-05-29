@@ -1,4 +1,4 @@
-bundle:
+bundle-edge:
 	ansible-playbook bundle.yaml --ask-vault-pass
 
 pre-requisites:

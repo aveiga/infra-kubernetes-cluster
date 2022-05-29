@@ -1,12 +1,28 @@
 # Public variables
-k3s_binary_url: "https://github.com/k3s-io/k3s/releases/download/v1.23.6%2Bk3s1/k3s"
-k3s_airgap_images_url: "https://github.com/k3s-io/k3s/releases/download/v1.23.6%2Bk3s1/k3s-airgap-images-amd64.tar.gz"
-k3s_install_script: "https://get.k3s.io"
+k3s_version: "v1.23.6%2Bk3s1"
+# argo_cd_version: "v2.3.4"
+rook_version: "v1.9.4"
+gitlab_version: ""
 
 # Private variables
 bundle_name: "edge_kubernetes"
 local_bundle_dir: "{{ playbook_dir }}/bundle/{{ bundle_name }}"
+local_bundle_manifests_dir: "{{ playbook_dir }}/bundle/{{ bundle_name }}/manifests"
 remote_bundles_dir: "/home/{{ vaulted_ssh_user }}/bundles"
 remote_edge_bundle_dir: "{{ remote_bundles_dir }}/{{ bundle_name }}"
+remote_edge_manifests_bundle_dir: "{{ remote_bundles_dir }}/{{ bundle_name }}/manifests"
+
+k3s_binary_url: "https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s"
+k3s_airgap_images_url: "https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s-airgap-images-amd64.tar.gz"
+k3s_install_script: "https://get.k3s.io"
+
+rook_crds_url: "https://raw.githubusercontent.com/rook/rook/{{ rook_version }}/deploy/examples/crds.yaml"
+rook_common_url: "https://raw.githubusercontent.com/rook/rook/{{ rook_version }}/deploy/examples/common.yaml"
+rook_operator_url: "https://raw.githubusercontent.com/rook/rook/{{ rook_version }}/deploy/examples/operator.yaml"
+rook_cluster_url: "https://raw.githubusercontent.com/rook/rook/{{ rook_version }}/deploy/examples/cluster.yaml"
+rook_toolbox_url: "https://raw.githubusercontent.com/rook/rook/{{ rook_version }}/deploy/examples/toolbox.yaml"
+
+# argo_cd_install_yaml_url: "https://raw.githubusercontent.com/argoproj/argo-cd/{{ argo_cd_version }}/manifests/install.yaml"
+
 ansible_become_pass: "{{ vaulted_become_password }}"
 ansible_ssh_user: "{{ vaulted_ssh_user }}"

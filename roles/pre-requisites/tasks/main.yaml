@@ -5,6 +5,13 @@
     path: "/etc/rancher/k3s/"
     state: "directory"
     mode: "+x"
+
+- name: Ensure the k3s manifests directory exists
+  become: true
+  ansible.builtin.file:
+    path: "/var/lib/rancher/k3s/server/manifests"
+    state: "directory"
+    mode: "+x"
     
 - name: Ensure remote bundle directory is created
   ansible.builtin.file:
@@ -44,3 +51,11 @@
   ansible.builtin.systemd:
     name: firewalld
     state: stopped
+
+- name: Copy the bundled manifest to the k3s manifest directory
+  become: true
+  ansible.builtin.copy:
+    src: "{{ remote_edge_manifests_bundle_dir }}/"
+    dest: "/var/lib/rancher/k3s/server/manifests/"
+    mode: "0644"
+    remote_src: true

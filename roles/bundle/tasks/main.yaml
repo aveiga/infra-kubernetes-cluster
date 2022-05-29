@@ -5,6 +5,12 @@
     state: directory
   delegate_to: localhost
 
+- name: Create temporary local manifests directory
+  ansible.builtin.file:
+    path: "{{ local_bundle_manifests_dir }}"
+    state: directory
+  delegate_to: localhost
+
 - name: Download k3s binary
   ansible.builtin.get_url:
     url: "{{ k3s_binary_url }}"
@@ -22,6 +28,24 @@
     url: "{{ k3s_install_script }}"
     dest: "{{ local_bundle_dir }}/install.sh"
     mode: "+x"
+
+- name: Move argocd manifests to the local temporary bundled manifests directory
+  ansible.builtin.copy:
+    src: "../files/argo.yaml"
+    dest: "{{ local_bundle_manifests_dir }}/argo.yaml"
+  delegate_to: localhost
+
+- name: Download rook manifests
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ local_bundle_manifests_dir }}/"
+    mode: "0644"
+  with_items: 
+    - "{{ rook_crds_url }}"
+    - "{{ rook_common_url }}"
+    - "{{ rook_operator_url }}"
+    - "{{ rook_cluster_url }}"
+    - "{{ rook_toolbox_url }}"
 
 - name: Archive the bundle and the Ansible playbooks
   ansible.builtin.archive:

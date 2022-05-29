@@ -2,6 +2,12 @@
 - name: Run k3s uninstall script
   become: true
   command: /usr/local/bin/k3s-uninstall.sh
+  ignore_errors: true
+
+- name: Run k3s uninstall script
+  become: true
+  command: /usr/local/bin/k3s-agent-uninstall.sh
+  ignore_errors: true
 
 - name: Remove the bundle
   become: true
