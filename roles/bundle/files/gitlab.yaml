@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gitlab
+  labels:
+    name: gitlab
+
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gitlab
+  namespace: kube-system
+spec:
+  repo: https://charts.gitlab.io/
+  chart: gitlab
+  targetNamespace: gitlab
+  set:
+    global.hosts.domain: "example.com"
+    certmanager-issuer.email: "me@example.com"

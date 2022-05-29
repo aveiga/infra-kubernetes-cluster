@@ -29,11 +29,14 @@
     dest: "{{ local_bundle_dir }}/install.sh"
     mode: "+x"
 
-- name: Move argocd manifests to the local temporary bundled manifests directory
+- name: Move ArgoCD and Gitlab manifests to the local temporary bundled manifests directory
   ansible.builtin.copy:
-    src: "../files/argo.yaml"
-    dest: "{{ local_bundle_manifests_dir }}/argo.yaml"
+    src: "../files/{{ item }}"
+    dest: "{{ local_bundle_manifests_dir }}/"
   delegate_to: localhost
+  with_items: 
+    - "argo.yaml"
+    - "gitlab.yaml"
 
 - name: Download rook manifests
   ansible.builtin.get_url:

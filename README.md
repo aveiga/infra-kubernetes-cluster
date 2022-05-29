@@ -49,7 +49,22 @@ sudo btrfs filesystem resize max /mnt
 
 - To verify rook status, bash into the toolbox pod by running `sudo kubectl -n rook-ceph exec -it deploy/rook-ceph-tools -- bash` and check rook status by running `ceph status`
 
+### Access Argo CD
+
+1. `ssh -L 8080:localhost:8080 master01`
+1. `sudo kubectl port-forward svc/argocd-server -n argocd 8080:443`
+1. `Access localhost:8080`
+1. Username: `admin`
+1. Password: `sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
+
 ## To Do
+
+- Gitlab
+  - use storageClass provided by Rook
+  - understand how to use the domains
+- ArgoCD
+
+## Resources
 
 - Gitlab (https://docs.gitlab.com/charts/quickstart/index.html)
 - ArgoCD
