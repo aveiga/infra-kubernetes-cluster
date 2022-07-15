@@ -14,6 +14,17 @@
   ignore_errors: true
   async: 600
   poll: 5
+  when: features.hardening is false
+
+- name: Install K3s
+  become: true
+  shell:
+    cmd: "INSTALL_K3S_SKIP_DOWNLOAD=true INSTALL_K3S_EXEC='server --server https://{{ hostvars['master01']['ansible_host'] }}:6443' ./install.sh -- server --protect-kernel-defaults=true --secrets-encryption=true --kube-apiserver-arg='audit-log-path=/var/lib/rancher/k3s/server/logs/audit.log' --kube-apiserver-arg='audit-policy-file=/var/lib/rancher/k3s/server/audit.yaml' --kube-apiserver-arg='audit-log-maxage=30' --kube-apiserver-arg='audit-log-maxbackup=10' --kube-apiserver-arg='audit-log-maxsize=100' --kube-apiserver-arg='request-timeout=300s' --kube-apiserver-arg='service-account-lookup=true' --kube-apiserver-arg='enable-admission-plugins=NodeRestriction,PodSecurityPolicy,NamespaceLifecycle,ServiceAccount' --kube-controller-manager-arg='terminated-pod-gc-threshold=10' --kube-controller-manager-arg='use-service-account-credentials=true' --kubelet-arg='streaming-connection-idle-timeout=5m' --kubelet-arg='make-iptables-util-chains=true'"
+    chdir: "{{ remote_edge_bundle_dir }}"
+  ignore_errors: true
+  async: 600
+  poll: 5
+  when: features.hardening is true
 
 # - name: Ensure k3s is running
 #   become: true
