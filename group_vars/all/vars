@@ -4,7 +4,13 @@ k3s_version: "v1.23.6%2Bk3s1"
 rook_version: "v1.9.4"
 gitlab_version: ""
 
+components:
+  argo: false
+  gitlab: false
+  rook: false
+
 # Private variables
+# arch: "{{ 'arm64' if ansible_architecture == 'arm64' else 'amd64' }}"
 bundle_name: "edge_kubernetes"
 local_bundle_dir: "{{ playbook_dir }}/bundle/{{ bundle_name }}"
 local_bundle_manifests_dir: "{{ playbook_dir }}/bundle/{{ bundle_name }}/manifests"
@@ -12,8 +18,12 @@ remote_bundles_dir: "/home/{{ vaulted_ssh_user }}/bundles"
 remote_edge_bundle_dir: "{{ remote_bundles_dir }}/{{ bundle_name }}"
 remote_edge_manifests_bundle_dir: "{{ remote_bundles_dir }}/{{ bundle_name }}/manifests"
 
-k3s_binary_url: "https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s"
-k3s_airgap_images_url: "https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s-airgap-images-amd64.tar.gz"
+k3s_binary_url:
+  arm64: "https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s-arm64"
+  x86_64: "https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s"
+k3s_airgap_images_url:
+  arm64: "https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s-airgap-images-arm64.tar.gz"
+  x86_64: "https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s-airgap-images-amd64.tar.gz"
 k3s_install_script: "https://get.k3s.io"
 
 rook_crds_url: "https://raw.githubusercontent.com/rook/rook/{{ rook_version }}/deploy/examples/crds.yaml"

@@ -1,4 +1,7 @@
 ---
+- debug:
+    msg: "CPU Architecture {{ ansible_architecture }}"
+
 - name: Create temporary local directory
   ansible.builtin.file:
     path: "{{ local_bundle_dir }}"
@@ -13,14 +16,14 @@
 
 - name: Download k3s binary
   ansible.builtin.get_url:
-    url: "{{ k3s_binary_url }}"
+    url: "{{ k3s_binary_url[ansible_architecture] }}"
     dest: "{{ local_bundle_dir }}/k3s"
     mode: "+x"
 
 - name: Download k3s images
   ansible.builtin.get_url:
-    url: "{{ k3s_airgap_images_url }}"
-    dest: "{{ local_bundle_dir }}/k3s-airgap-images-amd64.tar.gz"
+    url: "{{ k3s_airgap_images_url[ansible_architecture] }}"
+    dest: "{{ local_bundle_dir }}/k3s-airgap-images.tar.gz"
     mode: "0644"
 
 - name: Download k3s install script
@@ -29,14 +32,23 @@
     dest: "{{ local_bundle_dir }}/install.sh"
     mode: "+x"
 
-- name: Move ArgoCD and Gitlab manifests to the local temporary bundled manifests directory
+- name: Move ArgoCD manifests to the local temporary bundled manifests directory
   ansible.builtin.copy:
     src: "../files/{{ item }}"
     dest: "{{ local_bundle_manifests_dir }}/"
   delegate_to: localhost
   with_items: 
     - "argo.yaml"
+  when: components.argo is true
+
+- name: Move Gitlab manifests to the local temporary bundled manifests directory
+  ansible.builtin.copy:
+    src: "../files/{{ item }}"
+    dest: "{{ local_bundle_manifests_dir }}/"
+  delegate_to: localhost
+  with_items: 
     - "gitlab.yaml"
+  when: components.gitlab is true
 
 - name: Download rook manifests
   ansible.builtin.get_url:
@@ -49,6 +61,7 @@
     - "{{ rook_operator_url }}"
     - "{{ rook_cluster_url }}"
     - "{{ rook_toolbox_url }}"
+  when: components.rook is true
 
 - name: Archive the bundle and the Ansible playbooks
   ansible.builtin.archive:

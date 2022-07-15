@@ -1,23 +1,26 @@
 ---
-all:
+first_master:
   hosts:
-    # localhost:
-    #   ansible_connection: local
     master01:
-      ansible_host: 192.168.1.155
-      ansible_user: aveiga
-    master02:
-      ansible_host: 192.168.1.156
-      ansible_user: aveiga
-    master03:
-      ansible_host: 192.168.1.157
-      ansible_user: aveiga
-    worker01:
-      ansible_host: 192.168.1.158
-      ansible_user: aveiga
-    worker02:
-      ansible_host: 192.168.1.159
-      ansible_user: aveiga
-    worker03:
-      ansible_host: 192.168.1.160
-      ansible_user: aveiga
+          ansible_host: 192.168.1.166
+          ansible_user: aveiga
+other_masters:
+  hosts:
+    # master02:
+    #   ansible_host: 192.168.1.156
+    #   ansible_user: aveiga
+    # master03:
+    #   ansible_host: 192.168.1.157
+    #   ansible_user: aveiga
+
+workers:
+  hosts:
+#     worker01:
+#       ansible_host: 192.168.1.158
+#       ansible_user: aveiga
+#     worker02:
+#       ansible_host: 192.168.1.159
+#       ansible_user: aveiga
+#     worker03:
+#       ansible_host: 192.168.1.160
+#       ansible_user: aveiga

@@ -43,7 +43,7 @@
 - name: Place the images tar file in the images directory
   become: true
   ansible.builtin.unarchive:
-    src: "{{ remote_edge_bundle_dir }}/k3s-airgap-images-amd64.tar.gz"
+    src: "{{ remote_edge_bundle_dir }}/k3s-airgap-images.tar.gz"
     dest: "/var/lib/rancher/k3s/agent/images/"
     remote_src: true
 
@@ -51,6 +51,15 @@
   ansible.builtin.systemd:
     name: firewalld
     state: stopped
+  ignore_errors: true
+  # when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Stop firewall service
+  become: true
+  ansible.builtin.systemd:
+    name: ufw
+    state: stopped
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: Copy the bundled manifest to the k3s manifest directory
   become: true
