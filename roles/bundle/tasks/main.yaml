@@ -63,6 +63,16 @@
     - "{{ rook_toolbox_url }}"
   when: components.rook is true
 
+- name: Move PSP and NP manifests to the local temporary bundled manifests directory
+  ansible.builtin.copy:
+    src: "../files/{{ item }}"
+    dest: "{{ local_bundle_manifests_dir }}/"
+  delegate_to: localhost
+  with_items: 
+    - "psp.yaml"
+    - "np.yaml"
+  when: features.hardening is true
+
 - name: Archive the bundle and the Ansible playbooks
   ansible.builtin.archive:
     path: "{{ playbook_dir }}"

@@ -68,3 +68,25 @@
     dest: "/var/lib/rancher/k3s/server/manifests/"
     mode: "0644"
     remote_src: true
+
+- name: Copy the kubelet config
+  become: true
+  ansible.builtin.copy:
+    src: "../files/90-kubelet.conf"
+    dest: "/etc/sysctl.d/90-kubelet.conf"
+  when: features.hardening is true
+
+- name: Ensure the k3s server logs directory exists
+  become: true
+  ansible.builtin.file:
+    path: "/var/lib/rancher/k3s/server/logs"
+    state: "directory"
+    mode: "700"
+  when: features.hardening is true
+
+- name: Create the k3s audit policy
+  become: true
+  ansible.builtin.copy:
+    src: "../files/audit.yaml"
+    dest: "/var/lib/rancher/k3s/server/audit.yaml"
+  when: features.hardening is true

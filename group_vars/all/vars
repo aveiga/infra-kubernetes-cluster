@@ -9,6 +9,9 @@ components:
   gitlab: false
   rook: false
 
+features:
+  hardening: true
+
 # Private variables
 # arch: "{{ 'arm64' if ansible_architecture == 'arm64' else 'amd64' }}"
 bundle_name: "edge_kubernetes"
