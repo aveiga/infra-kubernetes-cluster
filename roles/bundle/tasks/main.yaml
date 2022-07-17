@@ -16,13 +16,13 @@
 
 - name: Download k3s binary
   ansible.builtin.get_url:
-    url: "{{ k3s_binary_url[ansible_architecture] }}"
+    url: "{{ k3s_binary_url[arch] }}"
     dest: "{{ local_bundle_dir }}/k3s"
     mode: "+x"
 
 - name: Download k3s images
   ansible.builtin.get_url:
-    url: "{{ k3s_airgap_images_url[ansible_architecture] }}"
+    url: "{{ k3s_airgap_images_url[arch] }}"
     dest: "{{ local_bundle_dir }}/k3s-airgap-images.tar.gz"
     mode: "0644"
 
@@ -62,6 +62,33 @@
     - "{{ rook_cluster_url }}"
     - "{{ rook_toolbox_url }}"
   when: components.rook is true
+
+- name: Download cert_manager manifests
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ local_bundle_manifests_dir }}/"
+    mode: "0644"
+  with_items: 
+    - "{{ cert_manager_crds_url }}"
+  when: components.cert_manager is true
+
+- name: Move cert_manager manifests to the local temporary bundled manifests directory
+  ansible.builtin.copy:
+    src: "../files/{{ item }}"
+    dest: "{{ local_bundle_manifests_dir }}/"
+  delegate_to: localhost
+  with_items: 
+    - "cert_manager.yaml"
+  when: components.cert_manager is true
+
+- name: Move Rancher manifests to the local temporary bundled manifests directory
+  ansible.builtin.copy:
+    src: "../files/{{ item }}"
+    dest: "{{ local_bundle_manifests_dir }}/"
+  delegate_to: localhost
+  with_items: 
+    - "rancher.yaml"
+  when: components.rancher is true
 
 - name: Move PSP and NP manifests to the local temporary bundled manifests directory
   ansible.builtin.copy:
