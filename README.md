@@ -2,7 +2,23 @@
 
 Ansible playbooks to setup an Airgap, HA [k3s](https://k3s.io) cluster Infrastructure components
 
-## Ansible host pre-requisites
+## VM Setup
+
+- `cd terraform`
+- If not done, create a `secret.tfvars` file with the following content:
+
+```
+sshkey_id = "<ID of the dev machine SSH key>"
+token     = "<CIVO API Token>"
+```
+
+- When setting up the project for the first time, run `terraform init`. If upgrading the civo provider version, run `terraform init --upgrade` instead (provider version is updated in the `terraform/provider.tf` file and the latest version is defined [here](https://registry.terraform.io/providers/civo/civo/latest) - click "use provider")
+- `make plan`
+- `make apply`
+
+## Kubernetes Setup
+
+### Ansible host pre-requisites
 
 1. [Install Ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html)
 1. Install the Ansible Docker Community collection: `ansible-galaxy collection install community.docker`
@@ -11,19 +27,25 @@ Ansible playbooks to setup an Airgap, HA [k3s](https://k3s.io) cluster Infrastru
 1. Install the Python Docker library: `pip3 install docker`
 1. Install the Python PyYaml library: `pip3 install pyyaml` -->
 
-## Install Procedure
+### Install Procedure
 
-1. Customize the [hosts.yaml](./hosts.yaml) file to point to your nodes. The "master0\*" hosts are assumed to be control plane nodes.
+1. Customize the [hosts.yaml](./ansible/hosts.yaml) file to point to your nodes. The "master0\*" hosts are assumed to be control plane nodes.
+1. `cd ansible`
 1. `make pre-requisites`
 1. `make install`
 
-## Uninstall Procedure
+### Kubernetes Uninstall Procedure
 
 1. `make uninstall`
 
-## Shutdown all nodes
+### Shutdown all nodes
 
 1. `make shutdown`
+
+## VM Deletion
+
+1. `cd terraform`
+1. `make destroy`
 
 ## Full documentation
 
