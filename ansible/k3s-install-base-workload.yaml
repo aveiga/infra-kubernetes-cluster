@@ -1,0 +1,5 @@
+---
+- name: Install first k3s control plane node
+  hosts: first_master
+  roles:
+    - base-workload

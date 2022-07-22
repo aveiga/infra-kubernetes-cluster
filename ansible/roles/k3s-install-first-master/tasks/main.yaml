@@ -26,6 +26,12 @@
   poll: 5
   when: features.hardening is true
 
+# - name: Restart the k3s process
+#   become: true
+#   ansible.builtin.systemd:
+#     name: k3s
+#     state: restarted
+
 - name: Get k3s token
   become: true
   command: "cat /var/lib/rancher/k3s/server/token"

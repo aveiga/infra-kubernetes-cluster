@@ -1,0 +1,2 @@
+---
+- import_tasks: cert-manager.yaml

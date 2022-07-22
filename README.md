@@ -23,6 +23,9 @@ token     = "<CIVO API Token>"
 1. [Install Ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html)
 1. Install the Ansible Docker Community collection: `ansible-galaxy collection install community.docker`
 1. Install the Ansible Posix collection: `ansible-galaxy collection install ansible.posix`
+1. Install the Ansible Kubernetes collection: `ansible-galaxy collection install kubernetes.core`
+1. Install the Python PyYaml library: `pip3 install pyyaml`
+1. Install the Python Kubernetes library: `pip3 install kubernetes`
 <!-- 1. Install Python
 1. Install the Python Docker library: `pip3 install docker`
 1. Install the Python PyYaml library: `pip3 install pyyaml` -->
@@ -85,9 +88,7 @@ sudo btrfs filesystem resize max /mnt
 
 ## To Do
 
-- Gitlab
-  - use storageClass provided by Rook
-  - understand how to use the domains
+- Deploy the Trivy Operator by default
 - ArgoCD
   - deploy minIO using an Application CRD
 - Rook

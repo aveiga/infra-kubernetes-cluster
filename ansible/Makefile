@@ -7,6 +7,9 @@ pre-requisites:
 install:
 	ansible-playbook k3s-install.yaml --ask-vault-pass
 
+install-base-workload:
+	ansible-playbook k3s-install-base-workload.yaml --ask-vault-pass
+
 uninstall:
 	ansible-playbook k3s-uninstall.yaml --ask-vault-pass
 

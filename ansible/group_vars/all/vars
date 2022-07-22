@@ -3,16 +3,19 @@ k3s_version: "v1.23.6%2Bk3s1"
 # argo_cd_version: "v2.3.4"
 rook_version: "v1.9.4"
 gitlab_version: ""
+k9s_version: "v0.26.0"
 
 components:
+  trivy: true
   argo: false
   gitlab: false
   rook: false
   cert_manager: true
-  rancher: false
+  rancher: true
 
 features:
-  hardening: true
+  hardening: false
+  generate_ca: true
 
 arch: "x86_64" # x86_64 or arm64
 
@@ -24,6 +27,7 @@ local_bundle_manifests_dir: "{{ playbook_dir }}/bundle/{{ bundle_name }}/manifes
 remote_bundles_dir: "/home/{{ vaulted_ssh_user }}/bundles"
 remote_edge_bundle_dir: "{{ remote_bundles_dir }}/{{ bundle_name }}"
 remote_edge_manifests_bundle_dir: "{{ remote_bundles_dir }}/{{ bundle_name }}/manifests"
+remote_certs_dir: "/home/{{ vaulted_ssh_user }}/.certs/"
 
 k3s_binary_url:
   arm64: "https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s-arm64"
@@ -40,6 +44,8 @@ rook_cluster_url: "https://raw.githubusercontent.com/rook/rook/{{ rook_version }
 rook_toolbox_url: "https://raw.githubusercontent.com/rook/rook/{{ rook_version }}/deploy/examples/toolbox.yaml"
 
 cert_manager_crds_url: "https://github.com/jetstack/cert-manager/releases/download/v1.0.4/cert-manager.crds.yaml"
+
+k9s_url: "https://github.com/derailed/k9s/releases/download/{{ k9s_version }}/k9s_Linux_{{ arch }}.tar.gz"
 
 # argo_cd_install_yaml_url: "https://raw.githubusercontent.com/argoproj/argo-cd/{{ argo_cd_version }}/manifests/install.yaml"
 

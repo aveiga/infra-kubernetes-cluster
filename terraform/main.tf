@@ -24,7 +24,7 @@ data "civo_disk_image" "ubuntu" {
 
 # Create a new instance
 resource "civo_instance" "server" {
-  count      = 3
+  count      = 1
   region     = "LON1"
   size       = element(data.civo_size.large.sizes, 0).name
   disk_image = element(data.civo_disk_image.ubuntu.diskimages, 0).id

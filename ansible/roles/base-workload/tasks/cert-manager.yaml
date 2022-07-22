@@ -1,0 +1,41 @@
+---
+- name: Wait for Kubernetes API availability
+  kubernetes.core.k8s_info:
+    kind: Pods
+    namespace: cert-manager
+    wait: true
+    wait_sleep: 10
+    wait_timeout: 60
+  when: components.cert_manager is true
+
+- name: Ensure certs directory is created
+  ansible.builtin.file:
+    path: "{{ remote_certs_dir }}"
+    state: directory
+  when: features.generate_ca is true and components.cert_manager is true
+
+- name: Generate CA cert and key
+  ansible.builtin.shell: "openssl req -x509 -newkey rsa:2048 -keyout {{ remote_certs_dir }}/key.pem -out {{ remote_certs_dir }}/ca.pem -days 3650 -subj /CN=testca -batch -nodes"
+  when: features.generate_ca is true and components.cert_manager is true
+
+- name: Register CA cert in base64
+  ansible.builtin.shell: "cat {{ remote_certs_dir }}/ca.pem | base64 -w0"
+  register: ca_cert
+  when: components.cert_manager is true
+
+- name: Register CA key in base64
+  ansible.builtin.shell: "cat {{ remote_certs_dir }}/key.pem | base64 -w0"
+  register: ca_key
+  when: components.cert_manager is true
+
+- name: Generate cluster issuer
+  ansible.builtin.template:
+    src: issuer.yaml.j2
+    dest: "{{ remote_edge_bundle_dir }}/issuer.yaml"
+  when: components.cert_manager is true
+
+- name: Apply cluster issuer
+  kubernetes.core.k8s:
+    state: present
+    src: "{{ remote_edge_bundle_dir }}/issuer.yaml"
+  when: components.cert_manager is true

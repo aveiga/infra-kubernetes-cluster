@@ -78,7 +78,7 @@
     dest: "{{ local_bundle_manifests_dir }}/"
   delegate_to: localhost
   with_items: 
-    - "cert_manager.yaml"
+    - "cert-manager.yaml"
   when: components.cert_manager is true
 
 - name: Move Rancher manifests to the local temporary bundled manifests directory
@@ -89,6 +89,15 @@
   with_items: 
     - "rancher.yaml"
   when: components.rancher is true
+
+- name: Move Trivy manifests to the local temporary bundled manifests directory
+  ansible.builtin.copy:
+    src: "../files/{{ item }}"
+    dest: "{{ local_bundle_manifests_dir }}/"
+  delegate_to: localhost
+  with_items: 
+    - "trivy.yaml"
+  when: components.trivy is true
 
 - name: Move PSP and NP manifests to the local temporary bundled manifests directory
   ansible.builtin.copy:

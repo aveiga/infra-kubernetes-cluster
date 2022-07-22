@@ -2,8 +2,8 @@
 first_master:
   hosts:
     master01:
-          ansible_host: 74.220.22.65
-          ansible_user: ubuntu
+          ansible_host: 74.220.17.233
+          ansible_user: civo
 other_masters:
   hosts:
     # master02:
