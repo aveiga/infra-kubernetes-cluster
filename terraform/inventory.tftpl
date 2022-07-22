@@ -1,0 +1,21 @@
+---
+first_master:
+  hosts:
+    master1:
+          ansible_host: ${ first_server_ip }
+          ansible_user: civo
+other_masters:
+  hosts:
+  %{ for index, ip in other_servers_ip }
+    master${ index + 2 }:
+      ansible_host: ip
+      ansible_user: civo
+  %{ endfor }
+
+workers:
+  hosts:
+  %{ for index, ip in workers_ip }
+    worker${ index + 1 }:
+      ansible_host: ${ ip }
+      ansible_user: civo
+  %{ endfor }
