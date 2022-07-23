@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: trivy-system
+  labels:
+    name: trivy-system
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: trivy-operator
+  namespace: trivy-system
+spec:
+  repo: https://aquasecurity.github.io/helm-charts/
+  chart: aqua/trivy-operator
+  targetNamespace: trivy-system
+  version: 0.1.5
+  set:
+    trivy.ignoreUnfixed: true

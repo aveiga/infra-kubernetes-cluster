@@ -1,5 +1,5 @@
-edge_kubernetes/
-bundle/
+ansible/bundle/*
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/ansible,terraform,visualstudiocode,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=ansible,terraform,visualstudiocode,macos
