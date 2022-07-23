@@ -32,7 +32,7 @@ resource "civo_instance" "first_server" {
 
 # Create the other K8s Control Plane node
 resource "civo_instance" "other_servers" {
-  count      = 0
+  count      = 1
   region     = "LON1"
   size       = element(data.civo_size.large.sizes, 0).name
   disk_image = element(data.civo_disk_image.ubuntu.diskimages, 0).id
@@ -40,7 +40,7 @@ resource "civo_instance" "other_servers" {
 }
 
 resource "civo_instance" "workers" {
-  count      = 0
+  count      = 1
   region     = "LON1"
   size       = element(data.civo_size.large.sizes, 0).name
   disk_image = element(data.civo_disk_image.ubuntu.diskimages, 0).id
@@ -53,12 +53,12 @@ resource "civo_instance" "workers" {
 # }
 
 resource "local_file" "ansible_inventory" {
-  content = yamlencode(templatefile("inventory.tftpl",
+  content = templatefile("templates/inventory.tftpl",
     {
       first_server_ip  = civo_instance.first_server.public_ip,
       other_servers_ip = civo_instance.other_servers.*.public_ip
       workers_ip       = civo_instance.workers.*.public_ip
     }
-  ))
-  filename = "inventory"
+  )
+  filename = "../ansible/hosts.yaml"
 }
